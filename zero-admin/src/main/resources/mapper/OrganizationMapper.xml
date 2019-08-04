@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.admin.mapper.OrganizationMapper">
+    <resultMap id="organization" type="space.zero.september.admin.entity.Organization">
+        <id column="org_id" property="orgId"/>
+        <result column="parent_org_id" property="parentOrgId"/>
+        <result column="org_name" property="orgName"/>
+        <result column="remark" property="remark"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="tenant_id" property="tenantId"/>
+    </resultMap>
+
+    <resultMap id="orgTree" type="space.zero.september.admin.entity.Organization" extends="organization">
+        <collection property="children"  column="org_id" ofType="space.zero.september.admin.entity.Organization"
+                    select="selectChildByParentId"></collection>
+    </resultMap>
+    
+    <!--手动加上逻辑删除-->
+    <select id="selectOrganization" resultMap="organization" parameterType="Map">
+        SELECT *
+        FROM sys_org
+        <where>
+            is_del = 0
+            <if test="orgName != null">
+                AND org_name = #{orgName}
+            </if>
+            <if test="remark != null">
+                AND remark = #{remark}
+            </if>
+        </where>
+    </select>
+    
+    <!--组织树-->
+    <select id="selectOrgTree" parameterType="Long" resultMap="orgTree">
+        SELECT *
+        FROM sys_org
+        WHERE is_del = 0 AND org_id = #{orgId}
+    </select>
+    
+    <!--子节点列表-->
+    <select id="selectChildByParentId" parameterType="Long" resultMap="orgTree">
+        SELECT *
+        FROM sys_org
+        WHERE is_del = 0 AND parent_org_id = #{parentOrgId}
+    </select>
+</mapper>

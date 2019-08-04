@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.admin.mapper.ClientAppMapper">
+    <resultMap id="client" type="space.zero.september.admin.entity.ClientApp">
+        <id column="client_app_id" property="clientAppId"/>
+        <result column="app_id" property="appId"/>
+        <result column="app_secret" property="appSecret"/>
+        <result column="description" property="description"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="tenant_id" property="tenantId"/>
+    </resultMap>
+
+    <select id="selectClientApp" resultMap="client">
+        SELECT *
+        FROM sys_client_app
+        <where>
+            is_del = 0
+            <if test="appId != null">
+                AND app_id = #{appId}
+            </if>
+            <if test="description != null">
+                AND description like concat(concat('%',#{description}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectIpByClientAppId" resultType="java.lang.String">
+        SELECT DISTINCT ip
+        FROM sys_client_app_api
+        <where>
+            client_app_id = #{clientAppId}
+        </where>
+    </select>
+</mapper>

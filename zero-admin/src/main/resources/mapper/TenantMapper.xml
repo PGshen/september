@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.admin.mapper.TenantMapper">
+    <resultMap id="tenant" type="space.zero.september.admin.entity.Tenant">
+        <id column="tenant_id" property="tenantId"/>
+        <result column="tenant_name" property="tenantName"/>
+        <result column="tenant_code" property="tenantCode"/>
+        <result column="description" property="description"/>
+        <result column="is_enable" property="isEnable"/>
+        <result column="is_del" property="isDel"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!--自己写的SQL，Mybatis Plus的逻辑删除不会生效，需手动加上-->
+    <select id="selectTenant" resultMap="tenant" parameterType="Map">
+        SELECT *
+        FROM sys_tenant
+        <where>
+            is_del = 0
+            <if test="tenantName != null">
+                AND tenant_name = #{tenantName}
+            </if>
+            <if test="description != null">
+                AND description like concat(concat('%',#{description}),'%')
+            </if>
+        </where>
+    </select>
+</mapper>

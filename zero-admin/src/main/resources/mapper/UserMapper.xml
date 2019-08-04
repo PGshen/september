@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.admin.mapper.UserMapper">
+    <resultMap id="userWithRoles" type="space.zero.september.admin.entity.User">
+        <id column="user_id" property="userId"/>
+        <result column="login_name" property="loginName"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="avatar" property="avatar"/>
+        <result column="remark" property="remark"/>
+        <result column="is_enable" property="isEnable"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="tenant_id" property="tenantId"/>
+    </resultMap>
+
+    <select id="selectUser" resultMap="userWithRoles">
+        SELECT *
+        FROM sys_user
+        <where>
+            is_del = 0
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+            <if test="loginName != null">
+                AND login_name like concat(concat('%',#{loginName}),'%')
+            </if>
+            <if test="name != null">
+                AND name like concat(concat('%',#{name}),'%')
+            </if>
+            <if test="phone != null">
+                AND phone like concat(concat('%',#{phone}),'%')
+            </if>
+
+        </where>
+    </select>
+
+    <update id="enableUser" parameterType="java.lang.Long">
+        UPDATE sys_user
+        SET is_enable = ABS(is_enable - 1)
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+</mapper>

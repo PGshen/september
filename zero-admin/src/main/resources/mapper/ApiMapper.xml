@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.admin.mapper.ApiMapper">
+    <resultMap id="api" type="space.zero.september.admin.entity.Api">
+        <id column="api_id" property="apiId"/>
+        <result column="parent_api_id" property="parentApiId"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="method" property="method"/>
+        <result column="uri" property="uri"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="tenant_id" property="tenantId"/>
+    </resultMap>
+
+    <resultMap id="apiTree" type="space.zero.september.admin.entity.Api" extends="api">
+        <collection property="children"  column="api_id" ofType="space.zero.september.admin.entity.Api"
+                    select="selectChildByParentId"></collection>
+    </resultMap>
+
+    <select id="selectApiByMenuId" resultMap="api">
+        SELECT a.*
+        FROM sys_api a, sys_menu_api ma
+        WHERE a.is_del = 0 AND a.api_id = ma.api_id AND ma.menu_id = #{menuId}
+    </select>
+
+    <select id="selectApiIdByMenuId" resultType="java.lang.Long">
+        SELECT api_id
+        FROM sys_menu_api
+        WHERE menu_id = #{menuId}
+    </select>
+
+    <select id="selectApiByClientAppId" resultMap="api">
+        SELECT a.*
+        FROM sys_api a, sys_client_app_api caa
+        WHERE a.is_del = 0 AND a.api_id = caa.api_id AND caa.client_app_id = #{clientAppId}
+    </select>
+
+    <select id="selectApiIdByClientAppIdAndIp" resultType="java.lang.Long">
+        SELECT api_id
+        FROM sys_client_app_api
+        WHERE client_app_id = #{clientAppId} AND ip = #{ip}
+    </select>
+
+    <delete id="deleteClientIp">
+        DELETE FROM sys_client_app_api
+        <where>
+            client_app_id = #{clientAppId} AND ip = #{ip}
+        </where>
+    </delete>
+
+    <!--api树-->
+    <select id="selectApiTree" parameterType="Long" resultMap="apiTree">
+        SELECT *
+        FROM sys_api
+        WHERE is_del = 0 AND api_id = #{apiId}
+    </select>
+
+    <!--子节点列表-->
+    <select id="selectChildByParentId" parameterType="Long" resultMap="apiTree">
+        SELECT *
+        FROM sys_api
+        WHERE is_del = 0 AND parent_api_id = #{parentApiId}
+    </select>
+
+</mapper>
