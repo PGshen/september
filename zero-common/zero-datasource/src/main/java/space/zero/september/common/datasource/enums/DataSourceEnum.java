@@ -9,11 +9,10 @@ package space.zero.september.common.datasource.enums;
 public enum DataSourceEnum {
 
     /**
-     * 数据源名称
+     * 数据源名称,实际使用时应替换成容易辨别的名称
      */
-    DB("db"),
-    DW("dw"),
-    ONLINE("online");
+    DB01("db01"),
+    DB02("db02");
 
     private String value;
 

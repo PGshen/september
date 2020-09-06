@@ -21,8 +21,6 @@ import space.zero.september.common.datasource.multiple.DataSourceContextHolder;
 @Aspect
 @Order(-1)
 public class DynamicDataSourceAspect {
-    Logger log = LoggerFactory.getLogger(DynamicDataSourceAspect.class);
-
     @Pointcut("@within(space.zero.september.common.datasource.annotation.DynamicDataSource) || @annotation(space.zero.september.common.datasource.annotation.DynamicDataSource)")
     public void pointCut(){}
 

@@ -35,8 +35,6 @@ import java.util.Map;
  * @description : mybatis plus配置
  * @create : 2019-07-16 20:03
  */
-//@Configuration
-//@MapperScan("space.zero.september.**.mapper")
 public class MyBatisPlusConfiguration {
 
     @Resource
@@ -46,7 +44,7 @@ public class MyBatisPlusConfiguration {
      * 分页插件，自动识别数据库类型
      * 多租户，请参考官网【插件扩展】
      */
-    @Bean
+    //@Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         // 开启 PageHelper 的支持
@@ -66,24 +64,17 @@ public class MyBatisPlusConfiguration {
         return performanceInterceptor;
     }
 
-    @Bean(name = "db")
-    @ConditionalOnProperty(prefix = "neva2.datasource.oracle.db", name = {"url", "username", "password"})
-    @ConfigurationProperties(prefix = "neva2.datasource.oracle.db" )
-    public DataSource db() {
+    @Bean(name = "db01")
+    @ConditionalOnProperty(prefix = "september.datasource.mysql.db01", name = {"url", "username", "password"})
+    @ConfigurationProperties(prefix = "september.datasource.mysql.db01" )
+    public DataSource db01() {
         return DruidDataSourceBuilder.create().build();
     }
 
-    @Bean(name = "dw")
-    @ConditionalOnProperty(prefix = "neva2.datasource.oracle.dw", name = {"url", "username", "password"})
-    @ConfigurationProperties(prefix = "neva2.datasource.oracle.dw" )
-    public DataSource dw() {
-        return DruidDataSourceBuilder.create().build();
-    }
-
-    @Bean(name = "online")
-    @ConditionalOnProperty(prefix = "neva2.datasource.mysql.online", name = {"url", "username", "password"})
-    @ConfigurationProperties(prefix = "neva2.datasource.mysql.online" )
-    public DataSource online() {
+    @Bean(name = "db02")
+    @ConditionalOnProperty(prefix = "september.datasource.oracle.db02", name = {"url", "username", "password"})
+    @ConfigurationProperties(prefix = "september.datasource.oracle.db02" )
+    public DataSource db02() {
         return DruidDataSourceBuilder.create().build();
     }
 
@@ -130,20 +121,20 @@ public class MyBatisPlusConfiguration {
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*Mapper.xml"));
 
         MybatisConfiguration configuration = new MybatisConfiguration();
-        //configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
         configuration.setJdbcTypeForNull(JdbcType.NULL);
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setCacheEnabled(false);
         sqlSessionFactory.setConfiguration(configuration);
-        sqlSessionFactory.setPlugins(new Interceptor[]{ //PerformanceInterceptor(),OptimisticLockerInterceptor()
-                paginationInterceptor() //添加分页功能
+        sqlSessionFactory.setPlugins(new Interceptor[]{
+                //添加分页功能
+                paginationInterceptor()
         });
         sqlSessionFactory.setGlobalConfig(globalConfiguration());
 
         return sqlSessionFactory.getObject();
     }
 
-    @Bean
+    //@Bean
     public GlobalConfiguration globalConfiguration() {
         GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
         conf.setLogicDeleteValue("1");
@@ -154,16 +145,4 @@ public class MyBatisPlusConfiguration {
         conf.setRefresh(true);
         return conf;
     }
-
-    //@Bean
-    //public GlobalConfig globalConfig() {
-    //    GlobalConfig config = new GlobalConfig();
-    //    config.setSqlInjector(new LogicSqlInjector());
-    //    config.setMetaObjectHandler(new CustomMetaObjectHandler());
-    //    GlobalConfig.DbConfig dbConfig = new GlobalConfig.DbConfig();
-    //    dbConfig.setLogicDeleteValue("1");
-    //    dbConfig.setLogicNotDeleteValue("0");
-    //    config.setDbConfig(dbConfig);
-    //    return config;
-    //}
 }

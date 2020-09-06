@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DynamicDataSource {
-    DataSourceEnum value() default DataSourceEnum.DB;
+    DataSourceEnum value() default DataSourceEnum.DB01;
 }
