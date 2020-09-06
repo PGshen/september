@@ -1,6 +1,5 @@
 package space.zero.september.common.core.utils;
 
-import org.springframework.util.StringUtils;
 import space.zero.september.common.core.param.ReqCond;
 
 import java.util.HashMap;
@@ -25,10 +24,14 @@ public class CommonUtil {
         Map<String, Object> condition = reqCond.getFilter();
         // 移除空值条件
         if (null != condition) {
-            condition.entrySet().removeIf(cond -> StringUtils.isEmpty(cond.getValue()));
+            condition.entrySet().removeIf(cond -> isEmpty(cond.getValue()));
         } else {
             condition = new HashMap<>();
         }
         return condition;
+    }
+
+    public static boolean isEmpty(Object str) {
+        return (str == null || "".equals(str));
     }
 }

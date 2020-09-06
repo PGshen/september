@@ -36,13 +36,13 @@ public enum  BusinessCode {
      */
     MENU(6000L, "菜单"),
     /**
-     * 租户 07000
+     * 组织机构 07000
      */
-    TENANT(7000L, "租户"),
+    ORGANIZATION(7000L, "组织机构"),
     /**
-     * 组织机构 08000
+     * 认证 08000
      */
-    ORGANIZATION(8000L, "组织机构"),
+    AUTH(8000L, "认证"),
     ;
 
     private long code;

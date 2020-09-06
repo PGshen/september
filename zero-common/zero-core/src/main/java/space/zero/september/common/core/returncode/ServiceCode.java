@@ -22,7 +22,7 @@ public enum ServiceCode {
     /**
      * 认证中心 03000000
      */
-    AUTHENTICATION(3000000L, "认证中心"),
+    AUTH(3000000L, "认证中心"),
     /**
      * 服务监控 04000000
      */
