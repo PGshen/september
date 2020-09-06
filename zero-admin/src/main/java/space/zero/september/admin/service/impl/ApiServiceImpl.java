@@ -181,6 +181,19 @@ public class ApiServiceImpl extends ServiceImpl<ApiMapper, Api> implements ApiSe
     }
 
     /**
+     * 获取用户关联的API列表
+     *
+     * @param userId 用户ID
+     * @return java.util.List<Api>
+     * @author penggs
+     * @date 2019-07-25
+     */
+    @Override
+    public List<Api> getApiByUserId(Long userId) {
+        return baseMapper.selectApiByUserId(userId);
+    }
+
+    /**
      * api 树结构
      *
      * @param apiId API ID

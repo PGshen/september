@@ -8,24 +8,23 @@
         <result column="description" property="description"/>
         <result column="created_time" property="createdTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
     <select id="selectRoleByUserId" resultMap="role">
-        SELECT r.role_id, r.role_name, r.alias, r.description, r.created_time, r.update_time, r.tenant_id
-        FROM sys_role r, sys_user_role ur
+        SELECT r.role_id, r.role_name, r.alias, r.description, r.created_time, r.update_time
+        FROM t_sys_role r, t_sys_user_role ur
         WHERE r.is_del = 0 AND r.role_id = ur.role_id AND ur.user_id = #{userId}
     </select>
 
     <select id="selectRoleIdByUserId" resultType="java.lang.Long">
         SELECT role_id
-        FROM sys_user_role
+        FROM t_sys_user_role
         WHERE user_id = #{userId}
     </select>
 
     <select id="selectRole" resultMap="role">
         SELECT *
-        FROM sys_role
+        FROM t_sys_role
         <where>
             is_del = 0
             <if test="roleName != null">
@@ -42,7 +41,7 @@
 
     <select id="countUserByRoleId" resultType="java.lang.Long">
         SELECT COUNT(1)
-        FROM sys_user_role
+        FROM t_sys_user_role
         <where>
             role_id = #{roleId}
         </where>

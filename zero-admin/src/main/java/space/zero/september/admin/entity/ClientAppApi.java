@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("sys_client_app_api")
+@TableName("t_sys_client_app_api")
 public class ClientAppApi implements Serializable {
 
     private static final long serialVersionUID = 2820621223724634471L;

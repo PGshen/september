@@ -10,7 +10,6 @@
         <result column="uri" property="uri"/>
         <result column="created_time" property="createdTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
     <resultMap id="apiTree" type="space.zero.september.admin.entity.Api" extends="api">
@@ -20,30 +19,36 @@
 
     <select id="selectApiByMenuId" resultMap="api">
         SELECT a.*
-        FROM sys_api a, sys_menu_api ma
+        FROM t_sys_api a, t_sys_menu_api ma
         WHERE a.is_del = 0 AND a.api_id = ma.api_id AND ma.menu_id = #{menuId}
     </select>
 
     <select id="selectApiIdByMenuId" resultType="java.lang.Long">
         SELECT api_id
-        FROM sys_menu_api
+        FROM t_sys_menu_api
         WHERE menu_id = #{menuId}
     </select>
 
     <select id="selectApiByClientAppId" resultMap="api">
         SELECT a.*
-        FROM sys_api a, sys_client_app_api caa
+        FROM t_sys_api a, t_sys_client_app_api caa
         WHERE a.is_del = 0 AND a.api_id = caa.api_id AND caa.client_app_id = #{clientAppId}
+    </select>
+
+    <select id="selectApiByUserId" resultMap="api">
+        SELECT distinct a.*
+        FROM t_sys_user u, t_sys_user_role ur, t_sys_role_menu rm, t_sys_menu_api ma, t_sys_api a
+        WHERE a.is_del = 0 AND u.user_id = ur.user_id AND ur.role_id = rm.role_id AND rm.menu_id = ma.menu_id AND u.user_id = #{userId}
     </select>
 
     <select id="selectApiIdByClientAppIdAndIp" resultType="java.lang.Long">
         SELECT api_id
-        FROM sys_client_app_api
+        FROM t_sys_client_app_api
         WHERE client_app_id = #{clientAppId} AND ip = #{ip}
     </select>
 
     <delete id="deleteClientIp">
-        DELETE FROM sys_client_app_api
+        DELETE FROM t_sys_client_app_api
         <where>
             client_app_id = #{clientAppId} AND ip = #{ip}
         </where>
@@ -52,14 +57,14 @@
     <!--api树-->
     <select id="selectApiTree" parameterType="Long" resultMap="apiTree">
         SELECT *
-        FROM sys_api
+        FROM t_sys_api
         WHERE is_del = 0 AND api_id = #{apiId}
     </select>
 
     <!--子节点列表-->
     <select id="selectChildByParentId" parameterType="Long" resultMap="apiTree">
         SELECT *
-        FROM sys_api
+        FROM t_sys_api
         WHERE is_del = 0 AND parent_api_id = #{parentApiId}
     </select>
 

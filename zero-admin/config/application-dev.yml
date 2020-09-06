@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /admin
+    context-path: /upms
 
 # datasource2
 mybatis-plus:
@@ -33,17 +33,51 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'
-neva2:
+september:
   datasource:
     mysql:
-      online:
+      db01:
         url: jdbc:mysql://127.0.0.1:3306/september?useUnicode=true&characterEncoding=UTF-8&useSSL=false
         username: root
-        password: 123456
+        password: One_123456
         driver-class-name: com.mysql.cj.jdbc.Driver
         initialSize: 5
         minIdle: 5
         maxActive: 20
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 60000
+
+
+#认证服务器地址
+security:
+  auth:
+    # 负载均衡方式，使用服务名
+    server: http://zero-auth:10020
+  encode:
+    key: '1234567887654321' #必须16位
+  oauth2:
+    client:
+      client-id: app
+      client-secret: app
+    resource:
+      token-info-uri: ${security.auth.server}/auth/oauth/check_token
+  ignore:
+    urls:
+      - /**
+      - /metadata/**
+      - /swagger-resources/**
+      - /swagger-ui.html
+      - /*/v2/api-docs
+      - /swagger/api-docs
+      - /webjars/**
+    clients:
+      - test
 
 swagger:
   title: September API

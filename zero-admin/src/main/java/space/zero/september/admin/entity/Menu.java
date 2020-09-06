@@ -20,7 +20,7 @@ import java.util.List;
  * @create : 2019-07-15 20:57
  */
 @Data
-@TableName("sys_menu")
+@TableName("t_sys_menu")
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = -873714269853734416L;
@@ -97,10 +97,6 @@ public class Menu implements Serializable {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
-    /**
-     * 租户ID
-     */
-    private String tenantId;
 
     /**
      * 子节点列表

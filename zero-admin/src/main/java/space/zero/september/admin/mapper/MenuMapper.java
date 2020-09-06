@@ -74,7 +74,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @author penggs
      * @date 2019-07-27
      */
-    @Select("select distinct m.menu_id from sys_menu m, sys_user_role ur, sys_role_menu rm where ur.role_id = rm.role_id and rm.menu_id = m.menu_id and m.is_del = 0 and ur.user_id = #{userId}")
+    @Select("select distinct m.menu_id from t_sys_menu m, t_sys_user_role ur, t_sys_role_menu rm where ur.role_id = rm.role_id and rm.menu_id = m.menu_id and m.is_del = 0 and ur.user_id = #{userId}")
     List<Long> selectUserMenuId(Long userId);
 
     /**
@@ -85,6 +85,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @author penggs
      * @date 2019-07-27
      */
-    @Select("select distinct m.perm from sys_menu m, sys_user_role ur, sys_role_menu rm where ur.role_id = rm.role_id and rm.menu_id = m.menu_id and m.is_del = 0 and ur.user_id = #{userId}")
+    @Select("select distinct m.perm from t_sys_menu m, t_sys_user_role ur, t_sys_role_menu rm where ur.role_id = rm.role_id and rm.menu_id = m.menu_id and m.is_del = 0 and ur.user_id = #{userId}")
     List<String> selectUserMenuPerm(Long userId);
 }

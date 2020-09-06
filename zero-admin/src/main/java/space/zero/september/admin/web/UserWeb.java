@@ -10,9 +10,13 @@ import space.zero.september.admin.service.RoleService;
 import space.zero.september.admin.service.UserService;
 import space.zero.september.admin.service.UserService;
 import space.zero.september.admin.util.ResultGen;
+import space.zero.september.admin.vo.UserInfoVO;
 import space.zero.september.common.core.Result;
 import space.zero.september.common.core.param.ReqCond;
 import space.zero.september.common.core.returncode.BusinessCode;
+import space.zero.september.common.core.returncode.ErrorCode;
+import space.zero.september.common.security.service.AuthService;
+import space.zero.september.common.security.service.AuthUser;
 
 import java.util.List;
 
@@ -74,16 +78,28 @@ public class UserWeb {
         return userService.enableUser(userId);
     }
 
+    @ApiOperation(value = "[用户]按登录名获取用户", notes = "返回 指定登录名的用户", produces = "application/xml,application/json", tags = { "用户模块" }, response = Result.class)
+    @GetMapping("/login/{loginName}")
+    public Result<UserInfoVO> getByLoginName(@PathVariable String loginName) {
+        return userService.getUserByLoginName(loginName);
+    }
+
 
     /**
-     * 临时模拟返回当前用户
+     * [登录]返回当前用户
      *
-     * @return space.zero.september.common.core.Result
+     * @return Result
      * @author penggs
      * @date 2019-07-27
      */
     @PostMapping("/now")
-    public Result nowUser(){
-        return userService.getUserById(1L);
+    public Result<UserInfoVO> nowUser(){
+        ResultGen<UserInfoVO> resultGen = new ResultGen<>();
+        AuthUser authUser = AuthService.getUser();
+        if (authUser == null) {
+            return resultGen.fail(BusinessCode.USER, ErrorCode.P513);
+        }
+        // username实际使用loginName
+        return userService.getUserByLoginName(authUser.getUsername());
     }
 }

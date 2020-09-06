@@ -20,7 +20,7 @@ import java.util.List;
  * @create : 2019-07-15 20:56
  */
 @Data
-@TableName("sys_org")
+@TableName("t_sys_org")
 public class Organization implements Serializable {
 
     private static final long serialVersionUID = -787998684234909569L;
@@ -61,10 +61,6 @@ public class Organization implements Serializable {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
-    /**
-     * 租户ID
-     */
-    private String tenantId;
     /**
      * 子节点
      */

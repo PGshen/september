@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("sys_role_menu")
+@TableName("t_sys_role_menu")
 public class RoleMenu implements Serializable {
 
     private static final long serialVersionUID = -2117290346189301499L;

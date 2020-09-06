@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("sys_user_role")
+@TableName("t_sys_user_role")
 public class UserRole implements Serializable {
 
     private static final long serialVersionUID = -8410549622839459582L;

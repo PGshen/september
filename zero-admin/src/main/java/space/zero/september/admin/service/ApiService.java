@@ -110,6 +110,16 @@ public interface ApiService extends IService<Api> {
     List<Long> getApiIdByClientAppIdAndIp(Long clientAppId, String ip);
 
     /**
+     * 获取用户关联的API列表
+     *
+     * @param userId 用户ID
+     * @return java.util.List<Api>
+     * @author penggs
+     * @date 2020-07-25
+     */
+    List<Api> getApiByUserId(Long userId);
+
+    /**
      * api 树
      *
      * @param apiId API ID

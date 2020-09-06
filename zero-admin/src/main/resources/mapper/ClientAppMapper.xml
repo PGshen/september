@@ -8,12 +8,11 @@
         <result column="description" property="description"/>
         <result column="created_time" property="createdTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
     <select id="selectClientApp" resultMap="client">
         SELECT *
-        FROM sys_client_app
+        FROM t_sys_client_app
         <where>
             is_del = 0
             <if test="appId != null">
@@ -27,7 +26,7 @@
 
     <select id="selectIpByClientAppId" resultType="java.lang.String">
         SELECT DISTINCT ip
-        FROM sys_client_app_api
+        FROM t_sys_client_app_api
         <where>
             client_app_id = #{clientAppId}
         </where>

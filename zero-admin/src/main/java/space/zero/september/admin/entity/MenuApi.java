@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("sys_menu_api")
+@TableName("t_sys_menu_api")
 public class MenuApi implements Serializable {
 
     private static final long serialVersionUID = -8904678812082753039L;

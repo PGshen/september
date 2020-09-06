@@ -3,6 +3,7 @@ package space.zero.september.admin.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.IService;
 import space.zero.september.admin.entity.User;
+import space.zero.september.admin.vo.UserInfoVO;
 import space.zero.september.common.core.Result;
 import space.zero.september.common.core.param.ReqCond;
 
@@ -22,6 +23,16 @@ public interface UserService extends IService<User> {
      * @date 2019-07-24
      */
     Result<User> getUserById(Long id);
+
+    /**
+     * 通过登录名获取用户信息，包含角色和权限，仅用于认证服务使用！！！
+     *
+     * @param loginName 登录名
+     * @return Result<User>
+     * @author penggs
+     * @date 2019-07-24
+     */
+    Result<UserInfoVO> getUserByLoginName(String loginName);
 
     /**
      * 分页查询

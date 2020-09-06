@@ -18,7 +18,7 @@ import java.util.Date;
  * @create : 2019-07-15 20:57
  */
 @Data
-@TableName("sys_role")
+@TableName("t_sys_role")
 public class Role implements Serializable {
 
     private static final long serialVersionUID = -1639657335024175774L;
@@ -55,8 +55,4 @@ public class Role implements Serializable {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
-    /**
-     * 租户ID
-     */
-    private String tenantId;
 }

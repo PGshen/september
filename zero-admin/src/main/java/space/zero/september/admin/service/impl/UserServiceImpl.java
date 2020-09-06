@@ -3,16 +3,20 @@ package space.zero.september.admin.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import space.zero.september.admin.entity.Api;
 import space.zero.september.admin.entity.User;
 import space.zero.september.admin.mapper.UserMapper;
+import space.zero.september.admin.service.ApiService;
 import space.zero.september.admin.service.RoleService;
 import space.zero.september.admin.service.UserRoleService;
 import space.zero.september.admin.service.UserService;
 import space.zero.september.admin.util.ResultGen;
+import space.zero.september.admin.vo.UserInfoVO;
 import space.zero.september.common.core.Result;
 import space.zero.september.common.core.param.ReqCond;
 import space.zero.september.common.core.returncode.BusinessCode;
@@ -21,6 +25,7 @@ import space.zero.september.common.core.utils.CommonUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author : penggs
@@ -38,6 +43,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RoleService roleService;
     @Autowired
     private UserRoleService userRoleService;
+    @Autowired
+    private ApiService apiService;
 
     /**
      * 根据ID查
@@ -60,6 +67,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
+     * 根据ID查
+     *
+     * @param loginName 登录名
+     * @return Result<User>
+     * @author penggs
+     * @date 2019-07-24
+     */
+    @Override
+    public Result<UserInfoVO> getUserByLoginName(String loginName) {
+        ResultGen<UserInfoVO> upmsResultGen = new ResultGen<>();
+        log.info("Get user: loginName = " + loginName);
+        User user = new User();
+        user.setLoginName(loginName);
+        user = baseMapper.selectOne(user);
+        if (user == null){
+            return upmsResultGen.fail(BusinessCode.USER, ErrorCode.P301);
+        }
+        List<Long> roleIds = roleService.getRoleIdByUserId(user.getUserId());
+        user.setRoles(roleIds);
+        List<Api> apis = apiService.getApiByUserId(user.getUserId());
+        List<String> permissions = apis.stream().map(Api::getPerm).filter(api -> {int i = api.indexOf(":"); return i != 0 && i != api.length()-1;}).collect(Collectors.toList());
+        UserInfoVO userInfoVO = new UserInfoVO();
+        userInfoVO.setUser(user);
+        userInfoVO.setRoles(roleIds);
+        userInfoVO.setPermissions(permissions);
+        return upmsResultGen.success(BusinessCode.USER, userInfoVO);
+    }
+
+    /**
      * 分页查询
      *
      * @param reqCond 条件
@@ -74,6 +110,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Page<User> page = new Page<>(reqCond.getPage(), reqCond.getSize(), reqCond.getSort());
         Map<String, Object> condition = CommonUtil.getReqCond(reqCond);
         page.setRecords(baseMapper.selectUser(page, condition));
+        page.getRecords().forEach(x -> x.setPassword(""));
         return resultGen.success(BusinessCode.USER, page);
     }
 
@@ -89,6 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result<User> saveUser(User user) {
         log.info("Save user: user = " + JSONObject.toJSONString(user));
         // 数据校验，不符就抛异常
+        user.setPassword(DigestUtils.md5Hex(user.getPassword()).toUpperCase());
         baseMapper.insert(user);
         // 角色分配
         userRoleService.assignRole(user.getUserId(), user.getRoles());

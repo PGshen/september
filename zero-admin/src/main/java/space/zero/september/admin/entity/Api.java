@@ -20,7 +20,7 @@ import java.util.List;
  * @create : 2019-07-15 20:57
  */
 @Data
-@TableName("sys_api")
+@TableName("t_sys_api")
 public class Api implements Serializable, Cloneable {
     private static final long serialVersionUID = -2753701557066373333L;
     /**
@@ -73,14 +73,17 @@ public class Api implements Serializable, Cloneable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
     /**
-     * 租户ID
-     */
-    private String tenantId;
-    /**
      * 子节点列表
      */
     @TableField(exist = false)
     private List<Api> children;
 
+    /**
+     * 返回 METHOD:URI 作为认证的权限标识
+     * @return
+     */
+    public String getPerm() {
+        return this.method + ":" + this.getUri();
+    }
 
 }

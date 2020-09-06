@@ -29,7 +29,7 @@
     <!--自己写的SQL，Mybatis Plus的逻辑删除不会生效，需手动加上-->
     <select id="selectMenu" resultMap="menu" parameterType="Map">
         SELECT *
-        FROM sys_menu
+        FROM t_sys_menu
         <where>
             is_del = 0
             <if test="type != null">
@@ -43,25 +43,25 @@
 
     <select id="selectMenuByRoleId" resultMap="menu">
         SELECT m.*
-        FROM sys_menu m, sys_role_menu rm
+        FROM t_sys_menu m, t_sys_role_menu rm
         WHERE m.is_del = 0 AND m.menu_id = rm.menu_id AND rm.role_id = #{roleId}
     </select>
 
     <select id="selectMenuIdByRoleId" resultType="java.lang.Long">
         SELECT menu_id
-        FROM sys_role_menu
+        FROM t_sys_role_menu
         WHERE role_id = #{roleId}
     </select>
 
     <select id="selectMenuTree" parameterType="java.lang.Long" resultMap="menuTree">
         SELECT *
-        FROM sys_menu
+        FROM t_sys_menu
         WHERE is_del = 0 AND menu_id = #{menuId}
     </select>
 
     <select id="selectChildByParentId" parameterType="java.lang.Long" resultMap="menuTree">
         SELECT *
-        FROM sys_menu
+        FROM t_sys_menu
         WHERE is_del = 0 AND parent_menu_id = #{parentMenuId}
     </select>
 

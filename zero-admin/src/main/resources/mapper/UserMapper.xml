@@ -12,12 +12,11 @@
         <result column="is_enable" property="isEnable"/>
         <result column="created_time" property="createdTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
     <select id="selectUser" resultMap="userWithRoles">
         SELECT *
-        FROM sys_user
+        FROM t_sys_user
         <where>
             is_del = 0
             <if test="userId != null">
@@ -37,7 +36,7 @@
     </select>
 
     <update id="enableUser" parameterType="java.lang.Long">
-        UPDATE sys_user
+        UPDATE t_sys_user
         SET is_enable = ABS(is_enable - 1)
         <where>
             user_id = #{userId}

@@ -21,7 +21,7 @@ import java.util.List;
  * @create : 2019-07-15 20:56
  */
 @Data
-@TableName("sys_user")
+@TableName("t_sys_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 8103760695344263609L;
 
@@ -83,9 +83,5 @@ public class User implements Serializable {
      */
     @TableField(exist = false)
     private List<Long> roles = new ArrayList<>();
-    /**
-     * 租户ID
-     */
-    private String tenantId;
 
 }

@@ -9,7 +9,6 @@
         <result column="order_num" property="orderNum"/>
         <result column="created_time" property="createdTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="tenant_id" property="tenantId"/>
     </resultMap>
 
     <resultMap id="orgTree" type="space.zero.september.admin.entity.Organization" extends="organization">
@@ -20,7 +19,7 @@
     <!--手动加上逻辑删除-->
     <select id="selectOrganization" resultMap="organization" parameterType="Map">
         SELECT *
-        FROM sys_org
+        FROM t_sys_org
         <where>
             is_del = 0
             <if test="orgName != null">
@@ -35,14 +34,14 @@
     <!--组织树-->
     <select id="selectOrgTree" parameterType="Long" resultMap="orgTree">
         SELECT *
-        FROM sys_org
+        FROM t_sys_org
         WHERE is_del = 0 AND org_id = #{orgId}
     </select>
     
     <!--子节点列表-->
     <select id="selectChildByParentId" parameterType="Long" resultMap="orgTree">
         SELECT *
-        FROM sys_org
+        FROM t_sys_org
         WHERE is_del = 0 AND parent_org_id = #{parentOrgId}
     </select>
 </mapper>

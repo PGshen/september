@@ -68,6 +68,16 @@ public interface ApiMapper extends BaseMapper<Api> {
     List<Long> selectApiIdByClientAppIdAndIp(@Param("clientAppId") Long clientAppId, @Param("ip") String ip);
 
     /**
+     * 获取用户关联的API列表
+     *
+     * @param userId 用户ID
+     * @return java.util.List<Api>
+     * @author penggs
+     * @date 2020-04-02
+     */
+    List<Api> selectApiByUserId(Long userId);
+
+    /**
      * API子节点列表
      *
      * @param parentApiId 父节点ID
