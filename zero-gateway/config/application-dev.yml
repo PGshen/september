@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          #开启小写验证，默认feign根据服务名查找都是用的全大写
+          lowerCaseServiceId: true
+      default-filters:
+        - StripPrefix=0
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+      routes:
+        - id: ZERO-ADMIN
+          uri: lb://zero-admin
+          predicates:
+            - Path=/admin/**
+        - id: ZERO-AUTH
+          uri: lb://zero-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: PasswordDecode
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
