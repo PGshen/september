@@ -76,13 +76,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public Result<UserInfoVO> getUserByLoginName(String loginName) {
-        ResultGen<UserInfoVO> upmsResultGen = new ResultGen<>();
+        ResultGen<UserInfoVO> adminResultGen = new ResultGen<>();
         log.info("Get user: loginName = " + loginName);
         User user = new User();
         user.setLoginName(loginName);
         user = baseMapper.selectOne(user);
         if (user == null){
-            return upmsResultGen.fail(BusinessCode.USER, ErrorCode.P301);
+            return adminResultGen.fail(BusinessCode.USER, ErrorCode.P301);
         }
         List<Long> roleIds = roleService.getRoleIdByUserId(user.getUserId());
         user.setRoles(roleIds);
@@ -92,7 +92,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userInfoVO.setUser(user);
         userInfoVO.setRoles(roleIds);
         userInfoVO.setPermissions(permissions);
-        return upmsResultGen.success(BusinessCode.USER, userInfoVO);
+        return adminResultGen.success(BusinessCode.USER, userInfoVO);
     }
 
     /**

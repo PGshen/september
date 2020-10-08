@@ -13,6 +13,8 @@ import space.zero.september.admin.vo.MenuAuth;
 import space.zero.september.common.core.Result;
 import space.zero.september.common.core.param.ReqCond;
 import space.zero.september.common.core.returncode.BusinessCode;
+import space.zero.september.common.security.service.AuthService;
+import space.zero.september.common.security.service.AuthUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +116,9 @@ public class MenuWeb {
     @GetMapping("/route")
     public Result getMenuTree(){
         // 用户ID用Spring Security 的缓存获取
-        List<Menu> menuList = menuService.getUserMenuId(1L);
+        AuthUser authUser = AuthService.getUser();
+        assert authUser != null;
+        List<Menu> menuList = menuService.getUserMenuId(authUser.getId());
         ResultGen<List<Menu>> resultGen = new ResultGen<>();
         return resultGen.success(BusinessCode.MENU, menuList);
     }
@@ -128,7 +132,9 @@ public class MenuWeb {
      */
     @GetMapping("/perm")
     public Result getMenuList(){
-        List<String> menuPermList = menuService.getUserMenuPerm(1L);
+        AuthUser authUser = AuthService.getUser();
+        assert authUser != null;
+        List<String> menuPermList = menuService.getUserMenuPerm(authUser.getId());
         ResultGen<List<String>> resultGen = new ResultGen<>();
         return resultGen.success(BusinessCode.MENU, menuPermList);
     }

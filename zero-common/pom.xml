@@ -20,7 +20,9 @@
         <module>zero-swagger</module>
         <module>zero-seata</module>
         <module>zero-security</module>
-        <module>zero-bom</module>
+        <module>zero-filter</module>
+        <module>zero-dep</module>
+        <module>zero-utils</module>
     </modules>
 
 

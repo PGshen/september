@@ -65,7 +65,7 @@ public class UserWeb {
         return userService.updateUser(id, user);
     }
 
-    @ApiOperation(value = "[用户]按ID获取用户", notes = "返回 指定ID的用户", produces = "application/xml,application/json", tags = { "用户模块" }, response = Result.class)
+    @ApiOperation(value = "[用户]按ID获取用户角色", notes = "返回 指定ID的用户", produces = "application/xml,application/json", tags = { "用户模块" }, response = Result.class)
     @GetMapping("/role/{userId}")
     public Result userRole(@PathVariable Long userId){
         ResultGen<List<Long>> resultGen = new ResultGen<>();

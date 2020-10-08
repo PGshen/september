@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /upms
+    context-path: /admin
 
 # datasource2
 mybatis-plus:
@@ -69,7 +69,6 @@ security:
       token-info-uri: ${security.auth.server}/auth/oauth/check_token
   ignore:
     urls:
-      - /**
       - /metadata/**
       - /swagger-resources/**
       - /swagger-ui.html
