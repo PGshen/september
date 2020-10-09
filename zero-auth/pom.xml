@@ -11,5 +11,48 @@
 
     <artifactId>zero-auth</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>space.zero</groupId>
+            <artifactId>zero-core</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>space.zero</groupId>
+            <artifactId>zero-datasource</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>space.zero</groupId>
+            <artifactId>zero-security</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>space.zero</groupId>
+            <artifactId>zero-redis</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>space.zero</groupId>
+            <artifactId>zero-filter</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--注册中心客户端-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--配置中心客户端-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!--undertow容器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
