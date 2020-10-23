@@ -18,7 +18,6 @@
         <module>zero-data</module>
         <module>zero-core</module>
         <module>zero-swagger</module>
-        <module>zero-seata</module>
         <module>zero-security</module>
         <module>zero-filter</module>
         <module>zero-dep</module>
