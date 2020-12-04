@@ -3,20 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>september</artifactId>
+        <artifactId>zero-seata-example</artifactId>
         <groupId>space.zero</groupId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>zero-business</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>zero-example</module>
-        <module>zero-webservice</module>
-        <module>zero-kafka</module>
-        <module>zero-seata-example</module>
-    </modules>
+    <artifactId>seata-storage</artifactId>
 
 
 </project>

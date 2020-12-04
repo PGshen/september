@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.seata.storage.mapper.StorageMapper">
+    <resultMap id="storage" type="space.zero.september.seata.storage.entity.Storage">
+        <id column="id" property="id"/>
+        <result column="commodity_code" property="commodityCode"/>
+        <result column="count" property="count"/>
+    </resultMap>
+</mapper>
