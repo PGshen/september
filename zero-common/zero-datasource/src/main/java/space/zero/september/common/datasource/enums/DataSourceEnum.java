@@ -12,7 +12,12 @@ public enum DataSourceEnum {
      * 数据源名称,实际使用时应替换成容易辨别的名称
      */
     DB01("db01"),
-    DB02("db02");
+    DB02("db02"),
+    SEATA_ACCOUNT("seataAccountProxy"),
+    SEATA_ORDER("seataOrderProxy"),
+    SEATA_STORAGE("seataStorageProxy"),
+    SEATA_BUSINESS("seataBusinessProxy")
+    ;
 
     private String value;
 

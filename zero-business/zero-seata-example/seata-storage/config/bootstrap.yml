@@ -17,6 +17,6 @@ spring:
 
 logging:
   config: config/logback-spring.xml
-  level:
-    io:
-      seata: debug
+#  level:
+#    io:
+#      seata: debug

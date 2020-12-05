@@ -17,7 +17,7 @@ import space.zero.september.seata.storage.service.StorageService;
  */
 @RestController
 public class StorageWeb {
-    private static Logger logger = LoggerFactory.getLogger(StorageWeb.class);
+    private static final Logger logger = LoggerFactory.getLogger(StorageWeb.class);
 
     @Autowired
     private StorageService storageService;

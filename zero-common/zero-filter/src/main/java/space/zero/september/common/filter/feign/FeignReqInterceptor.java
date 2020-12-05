@@ -2,7 +2,9 @@ package space.zero.september.common.filter.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import io.seata.core.context.RootContext;
 import lombok.Setter;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -55,5 +57,13 @@ public class FeignReqInterceptor implements RequestInterceptor {
         }
         // feign调用标识，用于区别于普通请求
         requestTemplate.header("feignRequest", "yes");
+        // seata 支持，传递XID
+        String xid = RootContext.getXID();
+        if (StringUtils.isNotBlank(xid)) {
+            log.debug("Seata feign xid：{}", xid);
+
+            requestTemplate.header(RootContext.KEY_XID, xid);
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 package space.zero.september.seata.storage.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import space.zero.september.seata.storage.entity.Storage;
 
