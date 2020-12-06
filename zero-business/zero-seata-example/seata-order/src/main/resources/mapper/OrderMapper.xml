@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="space.zero.september.seata.order.mapper.OrderMapper">
+    <resultMap id="order" type="space.zero.september.seata.order.entity.Order">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="commodity_code" property="commodityCode"/>
+        <result column="money" property="money"/>
+        <result column="count" property="count"/>
+    </resultMap>
+</mapper>
